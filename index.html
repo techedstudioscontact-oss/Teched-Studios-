@@ -1,0 +1,1007 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="REDpeiWCDT4wzu8fGXVkR10Nw0N-3m8BfE7gg9v55po" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teched Studios - Innovating Digital Experiences</title>
+    <meta name="description" content="Teched Studios creates cutting-edge digital experiences with Web, Mobile, and AI solutions.">
+    <meta property="og:title" content="Teched Studios">
+    <meta property="og:description" content="Innovating Digital Experiences — Web • Mobile • AI">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #001021;
+            --accent-cyan: #00E9FF;
+            --accent-blue: #0B62FF;
+            --text-light: #F0F8FF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .hero-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 8vw, 8rem);
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 233, 255, 0.5);
+            letter-spacing: -0.02em;
+            font-weight: 900;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan), 0 0 40px var(--accent-cyan);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hologram-effect {
+            background: linear-gradient(135deg, rgba(0, 233, 255, 0.1) 0%, rgba(11, 98, 255, 0.1) 100%);
+            box-shadow: 0 0 20px rgba(0, 233, 255, 0.2);
+            border: 1px solid rgba(0, 233, 255, 0.3);
+        }
+        
+        .pulse-glow {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px var(--accent-cyan); }
+            50% { box-shadow: 0 0 20px var(--accent-cyan), 0 0 30px var(--accent-cyan); }
+            100% { box-shadow: 0 0 5px var(--accent-cyan); }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-cyan);
+            top: 0;
+            opacity: 0;
+        }
+        
+        .onboarding-tooltip {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            margin: 80px 0;
+        }
+        
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: rgba(0, 233, 255, 0.1);
+            border: 1px solid rgba(0, 233, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 233, 255, 0.3);
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: #111;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 233, 255, 0.3);
+            border: 8px solid #222;
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .phone-notch {
+            width: 160px;
+            height: 30px;
+            background: #222;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .space-scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .rocket {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform-origin: center bottom;
+            z-index: 5;
+        }
+        
+        .rocket::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(to top, #ffa500, #ff6b6b, transparent);
+            border-radius: 50%;
+            filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .profile-card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .profile-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 16, 33, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 0 0 16px 16px;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            z-index: 2;
+        }
+        
+        .profile-card.active .profile-description {
+            transform: translateY(0);
+        }
+        
+        .profile-image {
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card.active .profile-image {
+            transform: scale(0.95);
+            filter: brightness(0.7);
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+    
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+    
+    <!-- Onboarding Tooltip -->
+    <div id="onboarding-tooltip" class="onboarding-tooltip glass-card p-4 max-w-xs">
+        <div class="flex items-start">
+            <div class="flex-1">
+                <p class="text-sm mb-2">🚀 <strong>Welcome!</strong> Scroll to explore our cosmic journey</p>
+                <button id="dismiss-tooltip" class="text-xs bg-transparent border border-cyan-400 text-cyan-400 px-2 py-1 rounded hover:bg-cyan-400 hover:text-[#001021] transition-colors">Got it</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Phone Mockup -->
+        <div class="phone-mockup floating absolute z-10">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+                <div id="space-scene" class="space-scene">
+                    <!-- Stars and rocket will be generated here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 z-20 text-center mt-80">
+            <!-- Animated Logo/Name -->
+            <h1 id="hero-heading" class="hero-heading mb-6 opacity-0">
+                <strong>Teched Studios</strong>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p id="hero-subtitle" class="text-xl md:text-2xl text-gray-300 mb-12 opacity-0">
+                Innovating Digital Experiences — Web • Mobile • AI
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="explore-projects-btn" class="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-[#001021] font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center">
+                    Explore Projects
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+                <button id="contact-us-btn" class="px-8 py-3 glass-card text-cyan-400 font-bold rounded-lg hover:bg-cyan-400 hover:text-[#001021] transition-colors flex items-center justify-center">
+                    Contact Us
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+            <div class="w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-cyan-400 rounded-full mt-2"></div>
+            </div>
+        </div>
+        
+        <!-- Three.js Space Background -->
+        <div id="space-background" class="absolute inset-0 z-0"></div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 font-['Orbitron']">About Teched Studios</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <p class="text-xl text-gray-300 text-center mb-12">
+                    Teched Studios is a creative technology company dedicated to building modern web and mobile applications 
+                    infused with AI, motion, and real-time performance. Our mission is to bring imagination to life through 
+                    technology that feels alive.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Founder Card -->
+                    <div class="profile-card glass-card p-8 rounded-2xl text-center">
+                        <div class="profile-image w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 mb-6 flex items-center justify-center text-white text-xl font-bold mx-auto">
+                            PK
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Prajjwal Kumar Gupta</h3>
+                        <p class="text-cyan-400 mb-4">Founder & CEO</p>
+                        
+                        <div class="profile-description">
+                            <p class="text-gray-300 text-sm">Visionary leader with expertise in AI and full-stack development. Passionate about creating transformative digital experiences that push the boundaries of technology.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Co-Founder Card -->
+                    <div class="profile-card glass-card p-8 rounded-2xl text-center">
+                        <div class="profile-image w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 mb-6 flex items-center justify-center text-white text-xl font-bold mx-auto">
+                            SA
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Shresta Arun</h3>
+                        <p class="text-cyan-400 mb-4">Co-Founder & CEO</p>
+                        
+                        <div class="profile-description">
+                            <p class="text-gray-300 text-sm">Strategic thinker with a focus on business development and product innovation. Dedicated to pushing the boundaries of technology and creating impactful solutions.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Company Info Card -->
+                    <div class="glass-card p-8 rounded-2xl text-center">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 mb-6 flex items-center justify-center text-white text-xl font-bold mx-auto">
+                            TS
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Teched Studios</h3>
+                        <p class="text-cyan-400 mb-4">Creative Tech Company</p>
+                        <p class="text-gray-300">Headquarters: India<br>Founded: 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 font-['Orbitron']">Featured Project</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- CollabSea Project Card -->
+                <div id="collabsea-card" class="glass-card p-8 rounded-2xl mb-12 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+                    
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-2/3 mb-6 md:mb-0 md:pr-8">
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4 font-['Orbitron']">CollabSea</h3>
+                            <p class="text-xl text-gray-300 mb-6">The Future of Brand & Influencer Collaboration</p>
+                            <p class="text-gray-400">Currently under development by Teched Studios</p>
+                        </div>
+                        
+                        <div class="md:w-1/3 flex justify-center">
+                            <div class="w-40 h-40 rounded-xl bg-gradient-to-br from-cyan-400/20 to-blue-500/20 border border-cyan-400/30 flex items-center justify-center pulse-glow">
+                                <svg class="w-16 h-16 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Orbiting Icons -->
+                    <div class="absolute -top-4 -right-4 w-32 h-32">
+                        <div class="orbit-icon absolute top-0 left-0 w-8 h-8 bg-cyan-400/20 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15.2C13.767 15.2 15.2 13.767 15.2 12 15.2 10.233 13.767 8.8 12 8.8 10.233 8.8 8.8 10.233 8.8 12 8.8 13.767 10.233 15.2 12 15.2zM20 6h-3.2l-1.2-1.2c-.4-.4-1-.8-1.6-.8H10c-.6 0-1.2.4-1.6.8L7.2 6H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 12c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
+                            </svg>
+                        </div>
+                        <div class="orbit-icon absolute top-0 right-0 w-8 h-8 bg-cyan-400/20 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                            </svg>
+                        </div>
+                        <div class="orbit-icon absolute bottom-0 left-0 w-8 h-8 bg-cyan-400/20 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other Projects -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1 -->
+                    <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform">
+                        <h3 class="text-2xl font-bold mb-4">Project Nova</h3>
+                        <p class="text-gray-300 mb-4">AI-powered analytics platform for e-commerce businesses.</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-cyan-400/20 text-cyan-400 rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Node.js</span>
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">AI/ML</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="glass-card p-6 rounded-2xl hover:scale-105 transition-transform">
+                        <h3 class="text-2xl font-bold mb-4">Aura Design System</h3>
+                        <p class="text-gray-300 mb-4">Comprehensive design system for consistent UI/UX across platforms.</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-cyan-400/20 text-cyan-400 rounded-full text-sm">Figma</span>
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Storybook</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+    </section>
+    
+    <!-- Technologies Section -->
+    <section id="technologies" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 font-['Orbitron']">Our Technologies</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <!-- React -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <svg class="w-10 h-10 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.4 12c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5zm-1.5-9.9C6.4 2.1 2.1 6.4 2.1 12s4.3 9.9 9.9 9.9 9.9-4.3 9.9-9.9S17.6 2.1 12 2.1zm7.5 9.9c0 4.1-3.4 7.5-7.5 7.5S4.5 16.1 4.5 12s3.4-7.5 7.5-7.5 7.5 3.4 7.5 7.5z"/>
+                        </svg>
+                        <span class="mt-2 text-sm">React</span>
+                    </div>
+                    
+                    <!-- Firebase -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <svg class="w-10 h-10 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4.2 15.8l2.5-2.5 2.5 2.5 5-5-2.5-2.5L14.2 5 4.2 15.8zm15 0l-5 5-2.5-2.5-2.5 2.5 5 5 7.5-7.5-2.5-2.5z"/>
+                        </svg>
+                        <span class="mt-2 text-sm">Firebase</span>
+                    </div>
+                    
+                    <!-- Tailwind -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <svg class="w-10 h-10 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 6c-2.7 0-4.4 1.3-5.1 4c1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.7 1.9 1.3 1 1 2.1 2.2 4.6 2.2 2.7 0 4.4-1.3 5.1-4c-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.7-1.9-1.3C15.1 7.1 14 6 12 6zm-5.1 5c-2.7 0-4.4 1.3-5.1 4c1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.7 1.9 1.3 1 1 2.1 2.2 4.6 2.2 2.7 0 4.4-1.3 5.1-4c-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.7-1.9-1.3C12.1 12.1 11 11 8.9 11z"/>
+                        </svg>
+                        <span class="mt-2 text-sm">Tailwind</span>
+                    </div>
+                    
+                    <!-- AI -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <svg class="w-10 h-10 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 16.5v-5.8l-3.3 3.3-1.4-1.4L12 9.7l5.7 5.7-1.4 1.4-3.3-3.3v5.8h-2z"/>
+                        </svg>
+                        <span class="mt-2 text-sm">AI</span>
+                    </div>
+                    
+                    <!-- Android -->
+                    <div class="tech-icon flex flex-col items-center">
+                        <svg class="w-10 h-10 text-green-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.6 9.5l1.7-3.1c.1-.2 0-.4-.2-.5l-1.3-.7c-.2-.1-.4 0-.5.2l-1.7 3.1c-1.3-.5-2.8-.8-4.3-.8s-3 .3-4.3.8L5.7 5.4c-.1-.2-.3-.3-.5-.2l-1.3.7c-.2.1-.3.3-.2.5l1.7 3.1C3.8 10.7 3 12.3 3 14c0 4.1 3.4 7.5 7.5 7.5h3c4.1 0 7.5-3.4 7.5-7.5 0-1.7-.8-3.3-2.4-4.5zM9 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z"/>
+                        </svg>
+                        <span class="mt-2 text-sm">Android</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 font-['Orbitron']">Get In Touch</h2>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="glass-card p-8 rounded-2xl">
+                    <p class="text-xl text-center text-gray-300 mb-8">Let's build something extraordinary together.</p>
+                    
+                    <form id="contact-form" class="space-y-6" action="mailto:techedstudios.contact@gmail.com" method="post" enctype="text/plain">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-2">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-[#001021] border border-cyan-400/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-[#001021] border border-cyan-400/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 bg-[#001021] border border-cyan-400/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-[#001021] font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center">
+                            Send Message
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 border-t border-cyan-400/20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 Teched Studios — Built with ❤️ by Prajjwal Kumar Gupta & Shresta Arun</p>
+                
+                <div class="flex space-x-4">
+                    <a href="https://github.com/techedstudioscontact-oss" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors transform hover:scale-110 duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                    <a href="https://in.linkedin.com/in/prajjwal-kumar-gupta-888837359" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors transform hover:scale-110 duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Audio Toggle -->
+    <button id="audio-toggle" class="fixed bottom-6 right-6 w-12 h-12 rounded-full glass-card flex items-center justify-center z-50">
+        <svg id="audio-icon" class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3.7v6.8l-2.9 2.9c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0l2.9-2.9 2.9 2.9c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-2.9-2.9v-6.8c0-.6-.4-1-1-1s-1 .4-1 1zm7 4.3c-.6 0-1 .4-1 1v8c0 1.7-1.3 3-3 3s-3-1.3-3-3v-1c0-.6-.4-1-1-1s-1 .4-1 1v1c0 2.8 2.2 5 5 5s5-2.2 5-5v-8c0-.6-.4-1-1-1z"/>
+        </svg>
+    </button>
+    
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+    
+    <script>
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Custom cursor
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursor = document.querySelector('.custom-cursor');
+            const cursorDot = document.querySelector('.cursor-dot');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
+            
+            // Hide cursor on mobile
+            if (window.innerWidth <= 768) {
+                cursor.style.display = 'none';
+                cursorDot.style.display = 'none';
+            }
+        });
+        
+        // Animate hero elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate hero heading
+            gsap.to('#hero-heading', {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "power3.out",
+                delay: 0.5
+            });
+            
+            // Animate subtitle
+            gsap.to('#hero-subtitle', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                delay: 1.2
+            });
+            
+            // Initialize space scene
+            initSpaceScene();
+            
+            // Initialize profile card interactions
+            initProfileCards();
+            
+            // Initialize button navigation
+            initButtonNavigation();
+        });
+        
+        // Initialize profile card interactions
+        function initProfileCards() {
+            const profileCards = document.querySelectorAll('.profile-card');
+            
+            profileCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Close all other cards
+                    profileCards.forEach(otherCard => {
+                        if (otherCard !== this) {
+                            otherCard.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle this card
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Close profile cards when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.profile-card')) {
+                    profileCards.forEach(card => {
+                        card.classList.remove('active');
+                    });
+                }
+            });
+        }
+        
+        // Initialize button navigation
+        function initButtonNavigation() {
+            // Explore Projects button
+            document.getElementById('explore-projects-btn').addEventListener('click', function() {
+                document.getElementById('projects').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+            
+            // Contact Us button
+            document.getElementById('contact-us-btn').addEventListener('click', function() {
+                document.getElementById('contact').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+        }
+        
+        // Initialize the space scene
+        function initSpaceScene() {
+            // Create stars in the phone screen
+            const spaceScene = document.getElementById('space-scene');
+            const starCount = 100;
+            
+            // Create stars
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random opacity
+                const opacity = Math.random() * 0.8 + 0.2;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.opacity = opacity;
+                
+                // Add twinkling animation
+                gsap.to(star, {
+                    opacity: Math.random() * 0.5,
+                    duration: Math.random() * 2 + 1,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+                
+                spaceScene.appendChild(star);
+            }
+            
+            // Create and animate rocket
+            const rocket = document.createElement('div');
+            rocket.className = 'rocket';
+            rocket.style.left = '50%';
+            rocket.style.top = '100%';
+            rocket.style.transform = 'translateX(-50%) rotate(180deg)';
+            
+            spaceScene.appendChild(rocket);
+            
+            // Rocket animation
+            setTimeout(() => {
+                gsap.to(rocket, {
+                    top: '-20%',
+                    rotation: 0,
+                    duration: 4,
+                    ease: "power2.inOut",
+                    onComplete: function() {
+                        rocket.remove();
+                        // Create new rocket after a delay
+                        setTimeout(createNewRocket, 2000);
+                    }
+                });
+            }, 1000);
+            
+            // Create Three.js background
+            initThreeJSScene();
+        }
+        
+        // Create new rocket
+        function createNewRocket() {
+            const spaceScene = document.getElementById('space-scene');
+            const rocket = document.createElement('div');
+            rocket.className = 'rocket';
+            
+            // Random starting position
+            const startX = Math.random() * 80 + 10;
+            rocket.style.left = `${startX}%`;
+            rocket.style.top = '100%';
+            rocket.style.transform = 'translateX(-50%) rotate(180deg)';
+            
+            spaceScene.appendChild(rocket);
+            
+            // Rocket animation
+            gsap.to(rocket, {
+                top: '-20%',
+                rotation: 0,
+                duration: 4,
+                ease: "power2.inOut",
+                onComplete: function() {
+                    rocket.remove();
+                    // Create new rocket after a delay
+                    setTimeout(createNewRocket, 2000);
+                }
+            });
+        }
+        
+        // Initialize Three.js space background
+        function initThreeJSScene() {
+            const container = document.getElementById('space-background');
+            
+            // Check if WebGL is supported
+            if (!isWebGLAvailable()) {
+                return;
+            }
+            
+            try {
+                // Create scene
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setClearColor(0x001021, 0);
+                container.appendChild(renderer.domElement);
+                
+                // Create stars
+                const starsGeometry = new THREE.BufferGeometry();
+                const starsCount = 5000;
+                
+                const positions = new Float32Array(starsCount * 3);
+                const colors = new Float32Array(starsCount * 3);
+                
+                for (let i = 0; i < starsCount * 3; i += 3) {
+                    // Random positions
+                    positions[i] = (Math.random() - 0.5) * 2000;
+                    positions[i + 1] = (Math.random() - 0.5) * 2000;
+                    positions[i + 2] = (Math.random() - 0.5) * 2000;
+                    
+                    // Random colors (mostly white/blue with some variation)
+                    colors[i] = Math.random() * 0.5 + 0.5; // R
+                    colors[i + 1] = Math.random() * 0.5 + 0.5; // G
+                    colors[i + 2] = Math.random() * 0.5 + 0.8; // B (more blue)
+                }
+                
+                starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                
+                const starsMaterial = new THREE.PointsMaterial({
+                    size: 2,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                
+                const starField = new THREE.Points(starsGeometry, starsMaterial);
+                scene.add(starField);
+                
+                // Position camera
+                camera.position.z = 500;
+                
+                // Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    // Rotate star field slowly
+                    starField.rotation.x += 0.0001;
+                    starField.rotation.y += 0.0002;
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+                
+            } catch (error) {
+                console.error('Error initializing Three.js scene:', error);
+            }
+        }
+        
+        // Check if WebGL is available
+        function isWebGLAvailable() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && 
+                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            // In a real implementation, this would send the form data to techedstudios.contact@gmail.com
+            // For this example, we'll just show an alert
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                this.reset();
+            }, 500);
+            
+            // Create confetti animation
+            createConfetti();
+        });
+        
+        // Create confetti animation
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            container.innerHTML = '';
+            
+            const colors = ['#00E9FF', '#0B62FF', '#FFFFFF', '#FF00FF'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                container.appendChild(confetti);
+                
+                const animation = gsap.to(confetti, {
+                    y: window.innerHeight + 100,
+                    x: Math.random() * 200 - 100,
+                    rotation: Math.random() * 360,
+                    opacity: 1,
+                    duration: Math.random() * 2 + 1,
+                    ease: "power2.out",
+                    onComplete: function() {
+                        confetti.remove();
+                    }
+                });
+                
+                animation.play();
+            }
+        }
+        
+        // Audio toggle
+        document.getElementById('audio-toggle').addEventListener('click', function() {
+            const icon = document.getElementById('audio-icon');
+            
+            if (icon.innerHTML.includes('M12 3.7')) {
+                // Switch to muted icon
+                icon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.8-1-3.3-2.5-4v8c1.5-.7 2.5-2.2 2.5-4zM14 3.2v2.1c2.9.9 5 3.5 5 6.7s-2.1 5.8-5 6.7v2.1c4-.9 7-4.5 7-8.8s-3-7.9-7-8.8z"/>';
+            } else {
+                // Switch to unmuted icon
+                icon.innerHTML = '<path d="M12 3.7v6.8l-2.9 2.9c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0l2.9-2.9 2.9 2.9c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-2.9-2.9v-6.8c0-.6-.4-1-1-1s-1 .4-1 1zm7 4.3c-.6 0-1 .4-1 1v8c0 1.7-1.3 3-3 3s-3-1.3-3-3v-1c0-.6-.4-1-1-1s-1 .4-1 1v1c0 2.8 2.2 5 5 5s5-2.2 5-5v-8c0-.6-.4-1-1-1z"/>';
+            }
+            
+            // In a real implementation, you would toggle audio playback here
+        });
+        
+        // Dismiss onboarding tooltip
+        document.getElementById('dismiss-tooltip').addEventListener('click', function() {
+            document.getElementById('onboarding-tooltip').style.display = 'none';
+        });
+        
+        // Hover effects for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                if (this.classList.contains('profile-card')) return;
+                
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleY = (x - centerX) / 20;
+                const angleX = (centerY - y) / 20;
+                
+                this.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (this.classList.contains('profile-card')) return;
+                
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+        
+        // Add scroll animations
+        gsap.utils.toArray('.glass-card').forEach(card => {
+            gsap.fromTo(card, {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
